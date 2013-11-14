@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/moorinteractive/backbone-localstorage.git"
   },
+  "scripts": {
+      "test": "grunt test"
+  },
   "keywords": [
     "backbone",
     "local",
