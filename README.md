@@ -20,7 +20,7 @@ After installing the package, you can grab the `backbone-localstorage.js` or the
 
 ## Changelog
 
-0.2.0
+0.2.0 (in development)
 
 * Added documentation
 
