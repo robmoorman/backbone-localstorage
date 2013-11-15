@@ -74,7 +74,7 @@
                                 LocalStorage._clear();
                             }
                         }
-
+                        
                         if (success){
                             success.apply(this, arguments);
                         }
@@ -83,6 +83,10 @@
                     previousSync.apply(this, [method, model, options]);
                 }
                 else {
+                    for(var prop in localStorage){
+                        console.log('found: '+prop);
+                    }
+                    
                     options.success.apply( this, [LocalStorage._getData(id), 'success', null]);
                 }
             }
