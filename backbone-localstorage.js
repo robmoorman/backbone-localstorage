@@ -10,7 +10,7 @@
     var LocalStorage = root.Backbone.LocalStorage = {};
     
     // Current version of the library. Keep in sync with `package.json` and `bower.json`.
-    LocalStorage.VERSION = '0.2.0';
+    LocalStorage.VERSION = '0.2.1';
     
     /**
      * @param {string}
@@ -37,7 +37,7 @@
         if (!ignorePrefixCondition){
             for(var prop in root.localStorage) {
                 if(prop.indexOf(prefix) === 0) {
-                    return root.localStorage.removeItem(prop);
+                    root.localStorage.removeItem(prop);
                 }
             }
         }
@@ -100,6 +100,16 @@
      * @param {string}
      */
     LocalStorage.setVersion = function(value){
+        var versionInStorage = LocalStorage._getData('version');
+        
+        // clear localStorage (only prefixed data) if version differs
+        if (versionInStorage !== null && versionInStorage !== value){
+            LocalStorage._clear(false);
+        }
+        
+        // store new version in storage
+        LocalStorage._setData('version', value);
+        
         version = value;
     };
     
@@ -124,7 +134,7 @@
         return prefix;
     };
     
-    // Override Backbone.sync method.
+    // Override Backbone.sync method when localStorage is supported.
     if (localStorage !== undefined){
         root.Backbone.sync = LocalStorage.sync;
     }

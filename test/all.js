@@ -78,3 +78,21 @@ asyncTest('models fetches data and localStorage is set', 2, function(){
         }
     });
 });
+
+test('localStorage is cleared when a different version is set', 3, function(){
+    console.log('gimme some');
+    
+    localStorage.setItem('unknown:test', JSON.stringify({name:'do-not-clear-me'}));
+    
+    Backbone.LocalStorage.setPrefix('app');
+    
+    localStorage.setItem('app:version', 1);
+    localStorage.setItem('app:test', JSON.stringify({name:'test'}));
+    localStorage.setItem('app:secondtest', JSON.stringify({name:'secondtest'}));
+    
+    Backbone.LocalStorage.setVersion(2);
+    
+    strictEqual(JSON.parse(localStorage.getItem('unknown:test')).name, 'do-not-clear-me');
+    equal(localStorage.getItem('app:test'), null);
+    equal(localStorage.getItem('app:secondtest'), null);
+});
