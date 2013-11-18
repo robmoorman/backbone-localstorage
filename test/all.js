@@ -56,8 +56,25 @@ asyncTest('data is set under unknown prefix', 1, function(){
     
     model.fetch({
         success: function(model, response, options){
-            deepEqual(response, object);
             start();
+            deepEqual(response, object);
+        }
+    });
+});
+
+asyncTest('models fetches data and localStorage is set', 2, function(){
+    var model = new (Backbone.Model.extend({
+        localStorage: {
+            id: 'test'
+        },
+        url: 'fixtures.json'
+    }));
+    
+    model.fetch({
+        success: function(model, response, options){
+            start();
+            ok(response, 'response is returned');
+            deepEqual(response, Backbone.LocalStorage._getData('test'), 'returned response strict equal to localStorage');
         }
     });
 });

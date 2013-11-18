@@ -20,8 +20,9 @@ After installing the package, you can grab the `backbone-localstorage.js` or the
 
 ## Changelog
 
-0.2.0 (in development)
+0.2.0
 
+* Fixed issue return null when no localStrage can be found
 * Added documentation
 
 0.1.0 (released on friday, november 15, 2013)
