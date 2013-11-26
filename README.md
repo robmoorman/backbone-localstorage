@@ -18,7 +18,50 @@ bower install backbone-localstorage
 
 After installing the package, you can grab the `backbone-localstorage.js` or the minified version of it `backbone-localstorage.min.js`
 
-## Atuclear localStorage when new content is available
+## Using Backbone localStorage
+
+When data is fetched via `Backbone.sync` (models & collections), the reponse will be stored with `JSON.stringify` in localStorage (before any `success` method is called).
+The name under the data is stored is in the following format:
+
+```
+<prefix>:<url>
+```
+
+Where `prefix` is the value set by ``Backbone.LocalStorage.setPrefix`` (default ``unknown``) and where ``url`` is the remote url from a model or collection.
+
+##### Using Backbone.Model
+```
+var model = Backbone.Model.extend({
+    id: '1',
+    urlRoot: '/api/pages',
+    localStorage: true
+});
+```
+
+##### Using Backbone.Collection
+```
+var collection = Backbone.Collections.extend({
+    url: '/api/pages',
+    localStorage: true
+});
+```
+
+##### Using forceRefresh option
+```
+var collection = Backbone.Collections.extend({
+    url: '/api/pages',
+    localStorage: true
+});
+
+collection.fetch({forceRefresh:true});
+```
+
+##### Set a prefix
+```
+Backbone.LocalStorage.setPrefix('my-namespace');
+```
+
+## Autoclear localStorage when new content is available
 
 Since many web applications have managable content, it's hard to determine when to recognize new content.
 Just like caching software, the only thing we know about our data is the url and it's optional localStorage id.
@@ -31,6 +74,11 @@ Backbone.LocalStorage.setVersion(100);
 The value may be of any type (int, string, etc.).
 
 ## Changelog
+
+0.3.0
+
+* Added forceRefresh option
+* Refactored id to url of model/collection
 
 0.2.1
 

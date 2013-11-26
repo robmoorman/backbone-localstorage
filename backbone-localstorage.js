@@ -10,7 +10,7 @@
     var LocalStorage = root.Backbone.LocalStorage = {};
     
     // Current version of the library. Keep in sync with `package.json` and `bower.json`.
-    LocalStorage.VERSION = '0.2.1';
+    LocalStorage.VERSION = '0.3.0';
     
     /**
      * @param {string}
@@ -52,9 +52,9 @@
      * @param {object}
      */
     LocalStorage.sync = function(method, model, options){
-        if (method === 'read' && typeof this.localStorage === 'object'){
+        if (method === 'read' && ((typeof this.localStorage === 'object') || (this.localStorage !== undefined && this.localStorage !== null && this.localStorage.toString().toLowerCase() === 'true'))){
             // Retrieve unique id under which the data will be stored, if no id found use the id of the model
-            var id = model.localStorage.id ? model.localStorage.id : model.id;
+            var id = model.url;
             
             // Retrieve timestamp from localStorage
             var timestamp = LocalStorage._getData(id+':timestamp');
@@ -84,7 +84,7 @@
                     previousSync.apply(this, [method, model, options]);
                 }
                 else {
-                    options.success.apply( this, [LocalStorage._getData(id), 'success', null]);
+                    options.success.apply( this, [data, 'success', null]);
                 }
             }
             else {

@@ -45,13 +45,11 @@ asyncTest('data is set under unknown prefix', 1, function(){
         name: 'Backbone localStorage'
     };
     
-    localStorage.setItem('app:test', JSON.stringify(object));
+    localStorage.setItem('app:http://rest.com/api/', JSON.stringify(object));
     
     var model = new (Backbone.Model.extend({
-        localStorage: {
-            id: 'test'
-        },
-        url: 'http://ignored.com'
+        localStorage: true,
+        url: 'http://rest.com/api/'
     }));
     
     model.fetch({
@@ -64,9 +62,7 @@ asyncTest('data is set under unknown prefix', 1, function(){
 
 asyncTest('models fetches data and localStorage is set', 2, function(){
     var model = new (Backbone.Model.extend({
-        localStorage: {
-            id: 'test'
-        },
+        localStorage: true,
         url: 'fixtures.json'
     }));
     
@@ -74,14 +70,31 @@ asyncTest('models fetches data and localStorage is set', 2, function(){
         success: function(model, response, options){
             start();
             ok(response, 'response is returned');
-            deepEqual(response, Backbone.LocalStorage._getData('test'), 'returned response strict equal to localStorage');
+            deepEqual(response, Backbone.LocalStorage._getData('fixtures.json'), 'returned response strict equal to localStorage');
+        }
+    });
+});
+
+asyncTest('models fetches data when forceRefresh is set', 3, function(){
+    var model = new (Backbone.Model.extend({
+        localStorage: true,
+        url: 'fixtures.json'
+    }));
+    
+    localStorage.setItem('app:fixtures.json', JSON.stringify({name:'remove-me-on-force-refresh'}));
+    
+    model.fetch({
+        forceRefresh: true,
+        success: function(model, response, options){
+            start();
+            ok(response, 'response is returned');
+            ok(response.name !== 'remove-me-on-force-refresh', 'response differs from data before forced fetch');
+            deepEqual(response, Backbone.LocalStorage._getData('fixtures.json'), 'returned response strict equal to localStorage');
         }
     });
 });
 
 test('localStorage is cleared when a different version is set', 3, function(){
-    console.log('gimme some');
-    
     localStorage.setItem('unknown:test', JSON.stringify({name:'do-not-clear-me'}));
     
     Backbone.LocalStorage.setPrefix('app');
