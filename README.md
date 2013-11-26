@@ -64,7 +64,7 @@ Backbone.LocalStorage.setPrefix('my-namespace');
 ## Autoclear localStorage when new content is available
 
 Since many web applications have managable content, it's hard to determine when to recognize new content.
-Just like caching software, the only thing we know about our data is the url and it's optional localStorage id.
+The only thing we know about our data is the url and it's timestamp when the data is strored in localStorage.
 With the method `setVerion` you can determine in which state of content the localStorage is set.
 At the point you call this method verions are compared (in strict mode).
 If the verion is not equal to it's, if present, previous version the localStorage will be cleared (only data set under `prefix`).
