@@ -109,3 +109,15 @@ test('localStorage is cleared when a different version is set', 3, function(){
     equal(localStorage.getItem('app:test'), null);
     equal(localStorage.getItem('app:secondtest'), null);
 });
+
+test('json is is stringified', 1, function(){
+    Backbone.LocalStorage._setData('object', {name:'object'});
+    
+    deepEqual(Backbone.LocalStorage._getData('object'), {name:'object'});
+});
+
+test('string is not stringified', 1, function(){
+    Backbone.LocalStorage._setData('string', 'This is a string.');
+    
+    strictEqual(Backbone.LocalStorage._getData('string'), 'This is a string.');
+});

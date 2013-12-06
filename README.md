@@ -75,6 +75,11 @@ The value may be of any type (int, string, etc.).
 
 ## Changelog
 
+0.3.1
+
+* Fixed support of localStorage in case of iOS private mode
+* Added tests for storing objects and string (stringified or not)
+
 0.3.0
 
 * Added forceRefresh option
