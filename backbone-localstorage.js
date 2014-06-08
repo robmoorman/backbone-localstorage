@@ -54,7 +54,7 @@
     LocalStorage.sync = function(method, model, options){
         if (method === 'read' && ((typeof this.localStorage === 'object') || (this.localStorage !== undefined && this.localStorage !== null && this.localStorage.toString().toLowerCase() === 'true'))){
             // Retrieve unique id under which the data will be stored, if no id found use the id of the model
-            var id = model.url;
+            var id = _.result(model, 'url');
             
             // Retrieve timestamp from localStorage
             var timestamp = LocalStorage._getData(id+':timestamp');
