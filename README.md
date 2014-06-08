@@ -74,6 +74,10 @@ The value may be of any type (int, string, etc.).
 
 ## Changelog
 
+0.3.2
+
+* Fixed url property compatible as a function, not just as a string value
+
 0.3.1
 
 * Fixed support of localStorage in case of iOS private mode
