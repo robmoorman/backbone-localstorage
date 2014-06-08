@@ -32,7 +32,6 @@ Where `prefix` is the value set by ``Backbone.LocalStorage.setPrefix`` (default 
 ##### Using Backbone.Model
 ```
 var model = Backbone.Model.extend({
-    id: '1',
     urlRoot: '/api/pages',
     localStorage: true
 });
@@ -40,7 +39,7 @@ var model = Backbone.Model.extend({
 
 ##### Using Backbone.Collection
 ```
-var collection = Backbone.Collections.extend({
+var collection = Backbone.Collection.extend({
     url: '/api/pages',
     localStorage: true
 });
@@ -48,7 +47,7 @@ var collection = Backbone.Collections.extend({
 
 ##### Using forceRefresh option
 ```
-var collection = Backbone.Collections.extend({
+var collection = Backbone.Collection.extend({
     url: '/api/pages',
     localStorage: true
 });
